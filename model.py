@@ -3,7 +3,7 @@ import torch.nn as nn
 import torch.nn.functional as F
 
 from torch import sigmoid
-from torch_geometric.nn import SAGEConv
+from torch_geometric.nn import ResGatedGraphConv
 from torch_geometric.data import Data, Batch
 from mygat import Att
 
@@ -16,7 +16,7 @@ class Model(torch.nn.Module):
     def __init__(self):
         super().__init__()
         self.conv1 = Att(IMG_SIZE*IMG_SIZE, featurelength * 2, heads=4)
-        self.conv2 = SAGEConv(featurelength, featurelength)
+        self.conv2 = ResGatedGraphConv(featurelength, featurelength)
 
         self.fc1 = nn.Linear(featurelength // 2, OUT)
 
