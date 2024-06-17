@@ -57,5 +57,5 @@ class Model(torch.nn.Module):
 
 
         x_6 = x_5 + x_4
-
-        return x_6
+        output = self.fc1(x_6)
+        return output
