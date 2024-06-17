@@ -58,6 +58,4 @@ class Model(torch.nn.Module):
 
         x_6 = x_5 + x_4
 
-        output = self.fc1(x_6)
-        output = F.log_softmax(output, dim=1)
-        return output
+        return x_6
