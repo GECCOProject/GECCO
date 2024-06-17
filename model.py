@@ -23,8 +23,6 @@ class Model(torch.nn.Module):
         self.dropout = nn.Dropout(0.15)
         self.pool = nn.MaxPool1d(2)
 
-        self.bn1 = nn.BatchNorm1d(featurelength)
-
     def forward(self, x, train):
         batch_size = x.shape[0]
 
@@ -36,15 +34,14 @@ class Model(torch.nn.Module):
 
 
         x_2 = self.conv1(x_1)
-        x_1 = F.relu(x_1)
+        x_2 = F.relu(x_2)
 
         if train:
             x_1 = self.dropout(x_1)
+
+        
         x_3 = self.pool(x_1.unsqueeze(0)).squeeze(0)
-
-
         x_3 = self.conv2(x_2, edge_index)
-        x_3 = self.bn1(x_2)
 
         if train:
             x_3 = self.dropout(x_2)
