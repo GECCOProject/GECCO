@@ -19,7 +19,7 @@ class Model(torch.nn.Module):
         self.conv2 = ResGatedGraphConv(featurelength, featurelength)
 
         self.fc1 = nn.Linear(featurelength // 2, OUT)
-        
+        self.bn = nn.BatchNorm1d(featurelength)
 
         self.dropout = nn.Dropout(0.15)
         self.pool = nn.MaxPool1d(2)
@@ -38,7 +38,7 @@ class Model(torch.nn.Module):
         x_2 = F.relu(x_2)
 
         if train:
-            x_1 = self.dropout(x_1)
+            x_2 = self.dropout(x_2)
 
         
         x_3 = self.conv2(x_2, edge_index)
@@ -47,9 +47,9 @@ class Model(torch.nn.Module):
         if train:
             x_3 = self.dropout(x_3)
 
-        x_4 = self.pool(x_2.unsqueeze(0)).squeeze(0)
+        x_4 = self.pool(self.bn(x_3))
 
-        attention = torch.matmul(x_3, torch.transpose(x_3, 0, 1))
+        attention = torch.matmul(x_4, torch.transpose(x_4, 0, 1))
         attention = sigmoid(attention)
         attention = attention / torch.sum(attention, dim=1).unsqueeze(1)
 
