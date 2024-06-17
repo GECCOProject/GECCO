@@ -45,7 +45,7 @@ class Model(torch.nn.Module):
         
 
         if train:
-            x_3 = self.dropout(x_2)
+            x_3 = self.dropout(x_3)
 
         x_4 = self.pool(x_2.unsqueeze(0)).squeeze(0)
 
