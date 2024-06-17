@@ -35,30 +35,30 @@ class Model(torch.nn.Module):
         edge_index = torch.cat((edge_index, torch.flip(edge_index, [0])), dim=0)
 
 
-        x_1 = self.conv1(x_1)
+        x_2 = self.conv1(x_1)
         x_1 = F.relu(x_1)
 
         if train:
             x_1 = self.dropout(x_1)
-        x_2 = self.pool(x_1.unsqueeze(0)).squeeze(0)
+        x_3 = self.pool(x_1.unsqueeze(0)).squeeze(0)
 
 
-        x_2 = self.conv2(x_2, edge_index)
-        x_2 = self.bn1(x_2)
-        x_2 = F.relu(x_2)
+        x_3 = self.conv2(x_2, edge_index)
+        x_3 = self.bn1(x_2)
 
         if train:
-            x_2 = self.dropout(x_2)
+            x_3 = self.dropout(x_2)
 
-        x_3 = self.pool(x_2.unsqueeze(0)).squeeze(0)
+        x_4 = self.pool(x_2.unsqueeze(0)).squeeze(0)
 
         attention = torch.matmul(x_3, torch.transpose(x_3, 0, 1))
         attention = sigmoid(attention)
         attention = attention / torch.sum(attention, dim=1).unsqueeze(1)
 
-        x_4 = torch.matmul(attention, x_3)
+        x_5 = torch.matmul(attention, x_3)
 
-        residual = x_4 + x_3
+        x_6 = x_5 + x_4
 
-        x_5 = self.fc1(residual)
-        return x_5
+        output = self.fc1(x_6)
+        output = F.log_softmax(output, dim=1)
+        return output
