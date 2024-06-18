@@ -56,7 +56,7 @@ for epoch in tqdm(range(old_epoch + 1, num_epochs+1)):
         labels = labels.to(device)
         optimizer.zero_grad()
         outputs = model(images, train=True)
-        loss = F.log_softmax(criterion(outputs, labels))
+        loss = criterion(F.log_softmax(outputs, dim=1), labels)
         loss.backward()
         optimizer.step()
         epoch_loss += loss.item()
@@ -75,7 +75,7 @@ for epoch in tqdm(range(old_epoch + 1, num_epochs+1)):
         outputs = model(images_val, train=False)
         ender.record()
         torch.cuda.synchronize()
-        loss = F.log_softmax(criterion(outputs, labels_val))
+        loss = criterion(F.log_softmax(outputs, dim=1), labels_val)
         _, predicted = torch.max(outputs.data, 1)
         correct = (predicted == labels_val).sum().item()
         val_accuracy = correct / labels_val.size(0)        
@@ -110,6 +110,3 @@ model_path = "./models/model.pt"
 torch.save(model, model_path)
 
 print('Finished Training')
-
-
-
