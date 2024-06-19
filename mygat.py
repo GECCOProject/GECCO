@@ -47,11 +47,5 @@ class Att(nn.Module):
             
     def forward(self, x: Tensor) -> Tensor:
         x = self.linear(x)
-        x = self.norm(x)
-        x = self.dropout(x)
-        
-        # x = x.permute(1, 0, 2)
-        # x, _ = self.att(x, x, x)
-        # x = x.permute(1, 0, 2)
         
         return x
