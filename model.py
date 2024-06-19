@@ -40,7 +40,7 @@ class Model(torch.nn.Module):
             
         x_3 = F.relu(x_2)
 
-        x_4 = self.conv2(x_2, edge_index)
+        x_4 = self.conv2(x_3, edge_index)
     
         x_4 = F.relu(x_4)
         x_4 = self.pool(self.bn(x_4))
