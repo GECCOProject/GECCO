@@ -34,17 +34,16 @@ class Model(torch.nn.Module):
         edge_index = torch.cat((edge_index, torch.flip(edge_index, [0])), dim=0)
 
         x_2 = self.conv1(x_1)
-        x_2 = F.relu(x_2)
         
         if train:
-            x_2 = self.dropout(x_2)   
+            x_2 = self.dropout(x_2) 
+            
+        x_3 = F.relu(x_2)
 
-        x_3 = self.conv2(x_2, edge_index)
-
-        if train:
-            x_3 = self.dropout(x_3)
-
-        x_4 = self.pool(self.bn(x_3))
+        x_4 = self.conv2(x_2, edge_index)
+    
+        x_4 = F.relu(x_4)
+        x_4 = self.pool(self.bn(x_4))
 
         attention = torch.matmul(x_4, torch.transpose(x_4, 0, 1))
         attention = sigmoid(attention)
