@@ -56,7 +56,7 @@ for epoch in tqdm(range(old_epoch + 1, num_epochs+1)):
         labels = labels.to(device)
         optimizer.zero_grad()
         outputs = model(images, train=True)
-        loss = criterion(F.log_softmax(outputs, dim=1), labels)
+        loss = criterion(outputs, labels)
         loss.backward()
         optimizer.step()
         epoch_loss += loss.item()
