@@ -75,7 +75,7 @@ for epoch in tqdm(range(old_epoch + 1, num_epochs+1)):
         outputs = model(images_val, train=False)
         ender.record()
         torch.cuda.synchronize()
-        loss = criterion(F.log_softmax(outputs, dim=1), labels_val)
+        loss = criterion(outputs, labels_val)
         _, predicted = torch.max(outputs.data, 1)
         correct = (predicted == labels_val).sum().item()
         val_accuracy = correct / labels_val.size(0)        
