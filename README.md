@@ -7,12 +7,13 @@ Additionally, update the directories in the code to match the datasets in your o
 ## Citing
 If you use GECCO in your paper, please use the following BibTeX entry.
 ```
-@misc{feinashley2024single,
+@misc{feinashley2024singlegraphconvolutionneed,
       title={A Single Graph Convolution Is All You Need: Efficient Grayscale Image Classification}, 
-      author={Jacob Fein-Ashley and Tian Ye and Sachini Wickramasinghe and Bingyi Zhang and Rajgopal Kannan and Viktor Prasanna},
+      author={Jacob Fein-Ashley and Sachini Wickramasinghe and Bingyi Zhang and Rajgopal Kannan and Viktor Prasanna},
       year={2024},
       eprint={2402.00564},
       archivePrefix={arXiv},
-      primaryClass={cs.CV}
+      primaryClass={cs.CV},
+      url={https://arxiv.org/abs/2402.00564}, 
 }
 ```
